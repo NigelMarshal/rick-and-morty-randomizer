@@ -21,7 +21,9 @@ function App() {
   return (
 
     <div className="bg-white mt-7">
-
+      <h1 className="text-center text-xl font-semibold leading-normal mt-0 mb-2 text-pink-800">
+        Click the button to generate a random character from the show!
+      </h1>
       <div className="container mx-auto max-w-screen-sm">
         <div className="text-center">
           {isLoading ? (
