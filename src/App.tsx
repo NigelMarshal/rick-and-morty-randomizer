@@ -1,13 +1,39 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { fetchCharacter, Character } from './API';
+import CharacterCard from './Components/CharacterCard/CharacterCard'
 
 function App() {
+
+  const [characterData, setCharacterData] = useState<Character>({} as Character);
+  const [isLoading, setIsLoading] = useState(false);
+  const [characterId, setCharacterId] = useState(2);
+
+  useEffect(() => {
+    const fetchFromApi = async () => {
+      setIsLoading(true);
+      const result = await fetchCharacter(characterId);
+      setIsLoading(false);
+      setCharacterData(result);
+    }
+    fetchFromApi();
+  }, [characterId])
+
   return (
-    <div className="bg-white">
-      <div className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 mx-auto max-w-screen-xl">
+    <div className="bg-white mt-7">
+
+      <div className="container mx-auto max-w-screen-sm">
         <div className="text-center">
-          <h2 className="text-base font-semibold tracking-wide text-blue-600 uppercase">
-            Pickle Riiiiiick
-          </h2>
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : (
+            <>
+              <CharacterCard name={characterData.name} image={characterData.image} />
+              <button onClick={() => setCharacterId(Math.floor(Math.random() * 10 + 1))}>
+                Random
+              </button>
+            </>
+          )}
+
         </div>
       </div>
     </div>
